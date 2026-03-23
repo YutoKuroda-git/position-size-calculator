@@ -1,4 +1,129 @@
-<div class="app-placeholder">
-  <h1>Position Size Calculator</h1>
-  <p>チャートと計算パネルはPhase 3以降で実装されます。</p>
-</div>
+<div class="calculator-layout">
+
+  <!-- ===== Left: Chart Panel ===== -->
+  <div class="chart-panel" id="chart-container">
+    <!-- Phase 4 で TradingView Lightweight Charts を描画 -->
+    <div class="chart-placeholder" id="chart-placeholder">
+      <span>チャートを読み込み中...</span>
+    </div>
+  </div>
+
+  <!-- ===== Right: Calculator Panel ===== -->
+  <div class="calc-panel">
+
+    <!-- Header -->
+    <div class="calc-panel__header">
+      <span class="calc-panel__title">Position Size Calc</span>
+      <span class="calc-panel__pair">USD / JPY</span>
+    </div>
+
+    <!-- Section: 設定 -->
+    <div class="calc-section">
+      <div class="calc-section__title">設定</div>
+
+      <div class="calc-field">
+        <label class="calc-field__label" for="balance">口座残高</label>
+        <div class="calc-field__input-wrap">
+          <input type="number" id="balance" class="calc-input"
+                 value="<%= current_user.account_balance.to_f %>"
+                 min="1" step="1000">
+          <span class="calc-field__unit">JPY</span>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-field__label" for="risk-percent">リスク</label>
+        <div class="calc-field__input-wrap">
+          <input type="number" id="risk-percent" class="calc-input"
+                 value="<%= current_user.risk_percent.to_f %>"
+                 min="0.1" max="100" step="0.1">
+          <span class="calc-field__unit">%</span>
+        </div>
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-field__label" for="rr-input">RR 目標</label>
+        <div class="calc-field__input-wrap">
+          <input type="number" id="rr-input" class="calc-input"
+                 value="2.0" min="0.1" step="0.1">
+          <span class="calc-field__unit">倍</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: ライン価格 -->
+    <div class="calc-section">
+      <div class="calc-section__title">ライン価格</div>
+
+      <div class="calc-field">
+        <label class="calc-field__label calc-field__label--entry" for="entry-price">
+          エントリー
+        </label>
+        <input type="number" id="entry-price" class="calc-input calc-input--standalone"
+               value="150.000" min="0" step="0.001">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-field__label calc-field__label--sl" for="sl-price">
+          損切り (SL)
+        </label>
+        <input type="number" id="sl-price" class="calc-input calc-input--standalone"
+               value="149.500" min="0" step="0.001">
+      </div>
+
+      <div class="calc-field">
+        <label class="calc-field__label calc-field__label--tp" for="tp-price">
+          利確 (TP)
+        </label>
+        <input type="number" id="tp-price" class="calc-input calc-input--standalone calc-input--readonly"
+               value="151.000" readonly tabindex="-1">
+      </div>
+    </div>
+
+    <!-- Section: pip 情報 -->
+    <div class="calc-section">
+      <div class="calc-section__title">pip 情報</div>
+
+      <div class="calc-pip-row">
+        <span class="calc-pip-row__label calc-pip-row__label--sl">SL 幅</span>
+        <span id="sl-pips" class="calc-pip-row__value">— pips</span>
+      </div>
+      <div class="calc-pip-row">
+        <span class="calc-pip-row__label calc-pip-row__label--tp">TP 幅</span>
+        <span id="tp-pips" class="calc-pip-row__value">— pips</span>
+      </div>
+    </div>
+
+    <!-- Section: 計算結果 -->
+    <div class="calc-section calc-section--results">
+      <div class="calc-section__title">計算結果</div>
+
+      <div class="calc-result">
+        <span class="calc-result__label">ロットサイズ</span>
+        <span class="calc-result__value" id="result-lot">—</span>
+      </div>
+
+      <div class="calc-result">
+        <span class="calc-result__label">リスク金額</span>
+        <span class="calc-result__value calc-result__value--risk" id="result-risk">—</span>
+      </div>
+
+      <div class="calc-result">
+        <span class="calc-result__label">リワード金額</span>
+        <span class="calc-result__value calc-result__value--reward" id="result-reward">—</span>
+      </div>
+
+      <div class="calc-result calc-result--rr">
+        <span class="calc-result__label">RR 比</span>
+        <span class="calc-result__value" id="result-rr">—</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="calc-panel__footer">
+      <span class="calc-footer__note">1 pip = ¥1,000（標準ロット）</span>
+    </div>
+
+  </div><!-- /.calc-panel -->
+
+</div><!-- /.calculator-layout -->
