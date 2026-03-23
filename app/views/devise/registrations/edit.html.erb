@@ -1,0 +1,62 @@
+<div class="auth-container">
+  <div class="auth-card auth-card--wide">
+    <h1 class="auth-card__title">アカウント設定</h1>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-section-title">取引設定</div>
+
+      <div class="form-group">
+        <%= f.label :account_balance, "口座残高 (JPY)", class: "form-label" %>
+        <%= f.number_field :account_balance, min: 1, class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :risk_percent, "リスク許容率 (%)", class: "form-label" %>
+        <%= f.number_field :risk_percent, min: 0.1, max: 100, step: 0.1, class: "form-input" %>
+      </div>
+
+      <div class="form-divider">
+        <span>アカウント情報</span>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email, "メールアドレス", class: "form-label" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, "新しいパスワード（変更しない場合は空白）", class: "form-label" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-input" %>
+        <% if @minimum_password_length %>
+          <span class="form-hint"><%= @minimum_password_length %>文字以上</span>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, "新しいパスワード（確認）", class: "form-label" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :current_password, "現在のパスワード（変更を確定するために必要）", class: "form-label" %>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-input" %>
+      </div>
+
+      <%= f.submit "更新する", class: "btn btn--primary btn--full" %>
+    <% end %>
+
+    <div class="form-divider"></div>
+
+    <div class="danger-zone">
+      <p class="danger-zone__title">アカウント削除</p>
+      <%= button_to "アカウントを削除する", registration_path(resource_name),
+          data: { turbo_confirm: "本当に削除しますか？この操作は取り消せません。" },
+          method: :delete,
+          class: "btn btn--danger" %>
+    </div>
+
+    <%= link_to "← 戻る", root_path, class: "auth-card__back" %>
+  </div>
+</div>

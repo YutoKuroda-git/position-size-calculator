@@ -1,0 +1,12 @@
+<% if resource.errors.any? %>
+  <div class="error-messages" data-turbo-temporary>
+    <p class="error-messages__title">
+      <%= resource.errors.count %>件のエラーがあります
+    </p>
+    <ul class="error-messages__list">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
