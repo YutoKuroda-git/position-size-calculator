@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: position_size_calculator_development
+  host: localhost
+  port: 5432
+  username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+
+test:
+  <<: *default
+  database: position_size_calculator_test
+  host: localhost
+  port: 5432
+  username: <%= ENV.fetch("DATABASE_USERNAME") { "postgres" } %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
